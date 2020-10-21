@@ -14,6 +14,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          repository: phuonghuynh/testci2
+          repository: phuonghuynh/testci3
           event-type: ${{ github.repository }}
           client-payload: '{ "ref": "${{ github.ref }}" }'
