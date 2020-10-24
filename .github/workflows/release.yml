@@ -13,8 +13,8 @@ jobs:
       - name: Trigger interscript-api
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-#          token: ${{ secrets.MY_TOKEN }}
+#          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.MY_TOKEN }}
           repository: phuonghuynh/testci2
           event-type: ${{ github.repository }}
           client-payload: '{ "ref": "${{ github.ref }}" }'
