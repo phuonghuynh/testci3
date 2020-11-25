@@ -29,7 +29,6 @@ jobs:
         run: |
           terraform init
           terraform workspace select prod
-          terraform plan -no-color
           terraform apply -auto-approve --var-file terraform.tfstate.d/terraform.tfvars
 
 #https://github.com/ad-m/report-link-action/actions/runs/282804589
