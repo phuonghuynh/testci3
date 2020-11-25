@@ -29,7 +29,7 @@ jobs:
         run: |
           terraform init
           terraform workspace select prod
-          terraform apply -auto-approve --var-file terraform.tfstate.d/terraform.tfvars
+          terraform apply -auto-approve --var-file terraform.tfstate.d/prod/terraform.tfvars
 
 #https://github.com/ad-m/report-link-action/actions/runs/282804589
       - name: Send PR to update statefile
