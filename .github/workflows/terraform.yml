@@ -1,0 +1,43 @@
+name: terraform
+
+on:
+  repository_dispatch:
+    types: [ phuonghuynh/testci2 ]
+
+env:
+  GITHUB_PUSH_TOKEN: ${{ secrets.MY_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: us-east-1
+
+jobs:
+  run-terraform:
+    runs-on: ubuntu-18.04
+    if: github.event.client_payload.workflow == 'terraform'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.12.29
+
+      - name: Terraform Format
+        run: terraform fmt -check
+
+      - name: Terraform Apply
+        run: |
+          terraform init
+          terraform select workspace prod
+          terraform plan -no-color
+          terraform apply -auto-approve --var-file terraform.tfstate.d/terraform.tfvars
+
+#https://github.com/ad-m/report-link-action/actions/runs/282804589
+      - name: Send PR to update statefile
+        uses: repo-sync/pull-request@v2
+        with:
+#          source_branch: ""                                 # If blank, default: triggered branch
+          destination_branch: "main"                      # If blank, default: master
+          pr_title: "Update terraform.tfstate into main" # Title of pull request
+          pr_body: "https://${{github.repository}}/actions/runs/${{github.run_number}}"              # Full markdown support, requires pr_title to be set
+#          github_token: ${{ env.GITHUB_TOKEN }}
