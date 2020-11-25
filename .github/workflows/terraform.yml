@@ -28,7 +28,7 @@ jobs:
       - name: Terraform Apply
         run: |
           terraform init
-          terraform select workspace prod
+          terraform workspace select prod
           terraform plan -no-color
           terraform apply -auto-approve --var-file terraform.tfstate.d/terraform.tfvars
 
