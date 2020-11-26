@@ -23,10 +23,13 @@ jobs:
 
       - name: Prepare env
         run: |
-          echo "PR_REVIEWERS=$(cat .pr_reviewers)" >> ${GITHUB_ENV}
+          pwd
+          cat .github/.pr_reviewers
+          echo "PR_REVIEWERS=$(cat .github/.pr_reviewers)" >> ${GITHUB_ENV}
 
       - name: Debug
         run: |
+          echo ${{env.PR_REVIEWERS}}
           echo ${PR_REVIEWERS}
           echo 123
 
