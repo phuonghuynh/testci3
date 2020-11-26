@@ -20,6 +20,16 @@ jobs:
     if: github.event.client_payload.workflow == 'terraform'
     steps:
       - uses: actions/checkout@v2
+
+      - name: Prepare env
+        run: |
+          echo "PR_REVIEWERS=$(cat .pr_reviewers)" >> ${GITHUB_ENV}
+
+      - name: Debug
+        run: |
+          echo ${PR_REVIEWERS}
+          echo 123
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
@@ -49,5 +59,8 @@ jobs:
         with:
           source_branch: ${{env.PUSH_BRANCH}}
           destination_branch: "main"
+#          pr_reviewer: "phuonghuynh"
+#          pr_assignee: "wei,worker"
+          pr_label: "terraform"
           pr_title: "[bot] Update terraform.tfstate into main for interscript v${{env.INTERSCRIPT_VERSION}}"
           pr_body: "Console log can be view [here](${{env.RUN_URL}})"
