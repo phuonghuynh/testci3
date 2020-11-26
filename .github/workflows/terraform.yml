@@ -11,6 +11,7 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: us-east-1
   RUN_ID: ${{github.workflow}}#${{github.run_number}}
+  INTERSCRIPT_VERSION: ${{github.event.client_payload.interscript_version}}
 
 jobs:
   run-terraform:
@@ -35,14 +36,12 @@ jobs:
       - name: Push changes to new branch
         uses: EndBug/add-and-commit@v5.2.0 # You can change this to use a specific version
         with:
-          branch: "gha/${{env.RUN_ID}}"
-          message: '[bot] Update terraform state file for runner ${{github.workflow}}#${{github.run_number}}'
+          message: '[bot] Auto deployed interscript v${{env.INTERSCRIPT_VERSION}}'
           signoff: true
 
       - name: Send PR to update statefile
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: "gha/${{env.RUN_ID}}"
           destination_branch: "main"
-          pr_title: "[bot] Update terraform.tfstate into main"
+          pr_title: "[bot] Update terraform.tfstate into main for interscript v${{env.INTERSCRIPT_VERSION}}"
           pr_body: "https://${{github.repository}}/actions/runs/${{github.run_number}}"
