@@ -45,6 +45,7 @@ jobs:
       - name: Send PR to update statefile
         uses: repo-sync/pull-request@v2
         with:
+          source_branch: "gha/${{env.RUN_ID}}"
           destination_branch: "main"
           pr_title: "[bot] Update terraform.tfstate into main for interscript v${{env.INTERSCRIPT_VERSION}}"
           pr_body: "https://${{github.repository}}/actions/runs/${{github.run_number}}"
