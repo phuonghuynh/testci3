@@ -33,10 +33,11 @@ jobs:
           terraform workspace select prod
           terraform apply -auto-approve --var-file terraform.tfstate.d/prod/terraform.tfvars
 
+      # get GHA email from https://github.community/t/github-actions-bot-email-address/17204/5
       - name: Push changes to git
         run: |
-          git config --global user.name "interscript-ci"
-          git config --global user.email "interscript-ci@users.noreply.github.com"
+          git config --global user.name "github-actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b gha/${{env.RUN_ID}}
           git add .
           git commit -m "[bot] Auto deployed interscript v${{env.INTERSCRIPT_VERSION}}"
