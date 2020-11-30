@@ -6,6 +6,7 @@ on:
 
 env:
   INTERSCRIPT_VERSION: ${{github.event.client_payload.interscript_version}}
+  TF_VAR_interscript_version: ${{github.event.client_payload.interscript_version}}
   GITHUB_PUSH_TOKEN: ${{ secrets.MY_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

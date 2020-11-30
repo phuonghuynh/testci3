@@ -5,7 +5,7 @@ provider "aws" {
 resource "null_resource" "this" {
   provisioner "local-exec" {
     command = <<EOT
-      echo "Hello world ${var.name}"
+      echo "Hello world ${var.name} v${var.interscript_version}"
     EOT
   }
 
